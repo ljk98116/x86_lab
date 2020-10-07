@@ -5,16 +5,15 @@ APPFILE = obj/myapp
 SRC = $(wildcard src/*.S)
 OBJ = $(SRC:src/%.S=obj/%.o)
 
-.PHONY:all
 all:
 	mkdir obj
 	make $(APPFILE)
 
 $(APPFILE): $(OBJ)
-	$(LINKCC) -o $@ $^
+	$(LINKCC) -o $@ $^ -m elf_i386
 
 obj/%.o: src/%.S
-	$(OBJCC) -o $@ $^ --gstabs
+	$(OBJCC) -o $@ $^ --gstabs --32
 
 .PHONY:clean
 clean:
@@ -28,7 +27,7 @@ objdump:
 run:
 	make all
 	./$(APPFILE)
-	
-.PHONY:debug
+
 debug:
+	make all
 	gdb $(APPFILE)
