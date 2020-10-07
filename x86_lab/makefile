@@ -5,6 +5,7 @@ APPFILE = obj/myapp
 SRC = $(wildcard src/*.S)
 OBJ = $(SRC:src/%.S=obj/%.o)
 
+.PHONY:all
 all:
 	mkdir obj
 	make $(APPFILE)
@@ -27,6 +28,7 @@ objdump:
 run:
 	make all
 	./$(APPFILE)
-
+	
+.PHONY:debug
 debug:
 	gdb $(APPFILE)
